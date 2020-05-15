@@ -1,0 +1,124 @@
+<!-- 
+coder: Shanezzar (www.shanezzar.com)
+dated: 07-05-2020 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ESP32 - WiFi | Relay | Temperature | Humidity</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/gauge.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <div class="center-all">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="card-title heading">ESP32 - WiFi | Relay | Temperature | Humidity</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- gauge for temperature -->
+            <canvas id="chartTemp"></canvas>
+            <h5 class="card-title">Temperature: <span id="temp">0</span>&#8451;</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- gauge for humidity -->
+            <canvas id="chartHumd"></canvas>
+            <h5 class="card-title">Humidity: <span id="humd">0</span>&#37;</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- gauge for heat index -->
+            <canvas id="chartIndex"></canvas>
+            <h5 class="card-title">Heat Index: <span id="index">0</span>&#8451;</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- relay 1 switch -->
+            <h5 class="card-title">Relay 1 - 32</h5>
+            <button class="btn btn-primary relay1 relayOn">Turn Off</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- relay 2 switch -->
+            <h5 class="card-title">Relay 2 - 33</h5>
+            <button class="btn btn-primary relay2 relayOn">Turn Off</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- relay 3 switch -->
+            <h5 class="card-title">Relay 3 - 25</h5>
+            <button class="btn btn-primary relay3 relayOn">Turn Off</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- relay 4 switch -->
+            <h5 class="card-title">Relay 4 - 26</h5>
+            <button class="btn btn-primary relay4 relayOn">Turn Off</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- status of connection -->
+            <h5 class="card-title">Status: <span id="status">...</span></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- info -->
+            <h5 class="card-title"><a href="https://www.shanezzar.com/" target="_blank">Shanezzar</a> | Dated: 07-05-2020</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
