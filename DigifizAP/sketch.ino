@@ -1,20 +1,20 @@
 #include <WiFi.h>
+#include <WiFiClient.h>
+#include <WiFiAP.h>
 #include "ESPAsyncWebServer.h"
 #include <ESPmDNS.h>
 #include "SPIFFS.h"
-#include "DHTesp.h"
 
 // defining constants
-const char* wifi_name = "Nike0007"; // wifi network name
-const char* wifi_pass = "nike0007"; // wifi network password
-const char* host = "shanezzar"; // host name to access web
+const char* wifi_name = "DigifizAP"; // wifi network name
+const char* wifi_pass = "87654321"; // wifi network password
+const char* host = "digifz"; // host name to access web
 
 // defining board pins
 int relay_pin1 = 32;
 int relay_pin2 = 33;
 int relay_pin3 = 25;
 int relay_pin4 = 26;
-int dhtPin = 13;
 
 // defining server
 AsyncWebServer server(80);
@@ -23,13 +23,12 @@ AsyncEventSource events("/events");
 
 AsyncWebSocketClient * lastClient = NULL;
 
-// defining DHT sensor
-DHTesp dht;
 
 void setup() {
   // serial port for debugging purposes
   Serial.begin (115200);
 
+  
   setupRelaySensor();
   setupSPIFFS();
   setupWifiHost();
@@ -55,9 +54,6 @@ void setupRelaySensor() {
   pinMode (relay_pin2, OUTPUT);
   pinMode (relay_pin3, OUTPUT);
   pinMode (relay_pin4, OUTPUT);
-
-  // initialize dht
-  dht.setup(dhtPin, DHTesp::DHT11);
 }
 
 void setupSPIFFS() {
@@ -71,20 +67,11 @@ void setupSPIFFS() {
 
 void setupWifiHost() {
   // connecting to wifi and getting ip
-  WiFi.begin(wifi_name, wifi_pass);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Connecting to WiFi...");
-  }
+  WiFi.softAP(wifi_name, wifi_pass);
+  IPAddress myIP = WiFi.softAPIP();
   Serial.println("Connection Successful");
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
-
-  // ip to host
-  MDNS.begin(host);
-  Serial.print("Open http://");
-  Serial.print(host);
-  Serial.println(".local");
 
 }
 
@@ -208,19 +195,14 @@ void toggleRelay(String relayId) {
 
 void dhtRead() {
   // reading temperature and humidity values
-  TempAndHumidity newValues = dht.getTempAndHumidity();
-
-  // check if any reads failed and exit early
-  if (dht.getStatus() != 0) {
-    return;
-  }
+  
 
   // calculating heat index
-  float heatIndex = dht.computeHeatIndex(newValues.temperature, newValues.humidity);
+  float heatIndex = 10.0;
 
   // forwarding respective values to clients
-  sendDataToAllWS("T: " + String(newValues.temperature));
-  sendDataToAllWS("H: " + String(newValues.humidity));
+  sendDataToAllWS("T: " + String(27.0));
+  sendDataToAllWS("H: " + String(60.0));
   sendDataToAllWS("I: " + String(heatIndex));
 }
 

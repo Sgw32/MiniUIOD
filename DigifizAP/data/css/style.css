@@ -1,13 +1,12 @@
 body {
     text-transform: uppercase;
-    background-color: #15192A;
+    background-color: #111;
     color: #ffffff;
 }
 
 .center-all {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+
 }
 
 .heading {
@@ -28,6 +27,13 @@ body {
 
 .btn-primary {
     background-color: #2CA8FF !important;
+    border-radius: 0px;
+    margin-top: 8px;
+    font-size: small;
+}
+
+.btn-reset {
+    background-color: #FFA82C !important;
     border-radius: 0px;
     margin-top: 8px;
     font-size: small;

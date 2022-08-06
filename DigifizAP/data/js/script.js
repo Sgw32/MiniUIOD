@@ -1,9 +1,14 @@
 $(document).ready(function () {
+    
     // defining variables
+    var targetSpeed = document.getElementById("chartSpeed");
+    var targetRPM = document.getElementById("chartRPM");
     var targetTemp = document.getElementById("chartTemp");
-    var targetIndex = document.getElementById("chartIndex");
-    var targetHumd = document.getElementById("chartHumd");
-    var gaugeTemp, gaugeIndex, gaugeHumd;
+    var targetOil = document.getElementById("chartOil");
+    var targetAir = document.getElementById("chartAir");
+    var targetFuel = document.getElementById("chartFuel");
+    
+    var gaugeSpeed, gaugeRPM, gaugeTemp, gaugeOil, gaugeAir, gaugeFuel;
 
     var relay1 = $('.relay1');
     var relay2 = $('.relay2');
@@ -126,19 +131,44 @@ $(document).ready(function () {
 
     function initGauge() {
         // color values for gauge
-        var colorValuesTempIndex = [
+        var colorValuesSpeed = [
             {strokeStyle: "#6AA84F", min: 0, max: 17},  // green
             {strokeStyle: "#FF9903", min: 18, max: 32}, // orange
             {strokeStyle: "#CC0200", min: 33, max: 80} // red
         ];
-        var colorValuesHumd = [
+        
+        var colorValuesRPM = [
+            {strokeStyle: "#6AA84F", min: 0, max: 60},  // green
+            {strokeStyle: "#FF9903", min: 61, max: 69}, // orange
+            {strokeStyle: "#CC0200", min: 70, max: 80} // red
+        ];
+        
+        var colorValuesTemp = [
             {strokeStyle: "#6AA84F", min: 0, max: 40},  // green
             {strokeStyle: "#FF9903", min: 41, max: 60}, // orange
             {strokeStyle: "#CC0200", min: 61, max: 80} // red
         ];
+        
+        var colorValuesOil = [
+            {strokeStyle: "#6AA84F", min: 0, max: 40},  // green
+            {strokeStyle: "#FF9903", min: 41, max: 60}, // orange
+            {strokeStyle: "#CC0200", min: 61, max: 80} // red
+        ];
+        
+        var colorValuesAir = [
+            {strokeStyle: "#6AA84F", min: 0, max: 40},  // green
+            {strokeStyle: "#FF9903", min: 41, max: 60}, // orange
+            {strokeStyle: "#CC0200", min: 61, max: 80} // red
+        ];
+        
+        var colorValuesFuel = [
+            {strokeStyle: "#CC0200", min: 0, max: 10},  // green
+            {strokeStyle: "#FF9903", min: 11, max: 20}, // orange
+            {strokeStyle: "#6AA84F", min: 21, max: 80} // red
+        ];
 
         // options for gauge
-        var optsTempIndex = {
+        var optsSpeed = {
             angle: 0, 
             lineWidth: 0.3, 
             radiusScale: 1, 
@@ -154,9 +184,10 @@ $(document).ready(function () {
             strokeColor: '#E0E0E0',  
             generateGradient: true,
             highDpiSupport: true,
-            staticZones: colorValuesTempIndex
+            staticZones: colorValuesSpeed
         };
-        var optsHumd = {
+        
+        var optsRPM = {
             angle: 0, 
             lineWidth: 0.3, 
             radiusScale: 1, 
@@ -172,18 +203,99 @@ $(document).ready(function () {
             strokeColor: '#E0E0E0',  
             generateGradient: true,
             highDpiSupport: true,
-            staticZones: colorValuesHumd
+            staticZones: colorValuesRPM
+        };
+        
+        var optsTemp = {
+            angle: 0, 
+            lineWidth: 0.3, 
+            radiusScale: 1, 
+            pointer: {
+                length: 0.6, 
+                strokeWidth: 0.035, 
+                color: '#000000' 
+            },
+            limitMax: false,     
+            limitMin: false,     
+            colorStart: '#6FADCF',   
+            colorStop: '#8FC0DA',    
+            strokeColor: '#E0E0E0',  
+            generateGradient: true,
+            highDpiSupport: true,
+            staticZones: colorValuesTemp
+        };
+        
+        var optsOil = {
+            angle: 0, 
+            lineWidth: 0.3, 
+            radiusScale: 1, 
+            pointer: {
+                length: 0.6, 
+                strokeWidth: 0.035, 
+                color: '#000000' 
+            },
+            limitMax: false,     
+            limitMin: false,     
+            colorStart: '#6FADCF',   
+            colorStop: '#8FC0DA',    
+            strokeColor: '#E0E0E0',  
+            generateGradient: true,
+            highDpiSupport: true,
+            staticZones: colorValuesOil
+        };
+        
+        var optsAir = {
+            angle: 0, 
+            lineWidth: 0.3, 
+            radiusScale: 1, 
+            pointer: {
+                length: 0.6, 
+                strokeWidth: 0.035, 
+                color: '#000000' 
+            },
+            limitMax: false,     
+            limitMin: false,     
+            colorStart: '#6FADCF',   
+            colorStop: '#8FC0DA',    
+            strokeColor: '#E0E0E0',  
+            generateGradient: true,
+            highDpiSupport: true,
+            staticZones: colorValuesAir
+        };
+        var optsFuel = {
+            angle: 0, 
+            lineWidth: 0.3, 
+            radiusScale: 1, 
+            pointer: {
+                length: 0.6, 
+                strokeWidth: 0.035, 
+                color: '#000000' 
+            },
+            limitMax: false,     
+            limitMin: false,     
+            colorStart: '#6FADCF',   
+            colorStop: '#8FC0DA',    
+            strokeColor: '#E0E0E0',  
+            generateGradient: true,
+            highDpiSupport: true,
+            staticZones: colorValuesFuel
         };
         
         // setting gauges
-        gaugeTemp = new Gauge(targetTemp).setOptions(optsTempIndex);
-        gaugeIndex = new Gauge(targetIndex).setOptions(optsTempIndex);
-        gaugeHumd = new Gauge(targetHumd).setOptions(optsHumd);
+        gaugeSpeed = new Gauge(targetSpeed).setOptions(optsSpeed);
+        gaugeRPM = new Gauge(targetRPM).setOptions(optsRPM);
+        gaugeTemp = new Gauge(targetTemp).setOptions(optsTemp);
+        gaugeOil = new Gauge(targetOil).setOptions(optsOil);
+        gaugeAir = new Gauge(targetAir).setOptions(optsAir);
+        gaugeFuel = new Gauge(targetFuel).setOptions(optsFuel);
 
         // initializing gauge with values
+        gaugeSpeed.set(0);
+        gaugeRPM.set(0);
         gaugeTemp.set(0);
-        gaugeIndex.set(0);
-        gaugeHumd.set(0);
+        gaugeOil.set(0);
+        gaugeAir.set(0);
+        gaugeFuel.set(0);
     }
     
 });

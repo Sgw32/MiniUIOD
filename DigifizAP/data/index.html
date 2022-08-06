@@ -1,0 +1,256 @@
+<!-- 
+coder: Shanezzar (www.shanezzar.com)
+dated: 07-05-2020 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Digifiz Control Panel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/gauge.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <div class="center-all">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="card-title heading">Digifiz Control Panel</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body text-center">
+            <img src="digifiz.png" class="img-fluid" alt="Responsive image">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- gauge for temperature -->
+            <canvas id="chartSpeed"></canvas>
+            <h5 class="card-title">Speed: <span id="speed">0</span> MPH/KMH</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- gauge for humidity -->
+            <canvas id="chartRPM"></canvas>
+            <h5 class="card-title">RPM: <span id="rpm">0</span> RPM</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- gauge for heat index -->
+            <canvas id="chartTemp"></canvas>
+            <h5 class="card-title">Temperature: <span id="coolantT">0</span>&#8451;</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- gauge for temperature -->
+            <canvas id="chartOil"></canvas>
+            <h5 class="card-title">Oil Temp: <span id="oilT">0</span>&#8451;</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- gauge for humidity -->
+            <canvas id="chartAir"></canvas>
+            <h5 class="card-title">Air Temp: <span id="airT">0</span>&#8451;</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- gauge for heat index -->
+            <canvas id="chartFuel"></canvas>
+            <h5 class="card-title">Fuel: <span id="fuel">0</span>&#37;</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- relay 1 switch -->
+            <h5 class="card-title">MFA</h5>
+            <button class="btn btn-primary mfablock relayOn">Block</button>
+            <button class="btn btn-primary mfareset relayOn">Reset</button>
+            <button class="btn btn-primary mfamode relayOn">Mode</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- relay 2 switch -->
+            <h5 class="card-title">Backlight</h5>
+            <button class="btn btn-primary bl_auto relayOn">Auto</button>
+            <button class="btn btn-primary bl_manual relayOn">Manual</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- relay 3 switch -->
+            <h5 class="card-title">Set time</h5>
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-4">
+                   <input type="number" id="hour" min="0" max="24" class="form-control" placeholder="hour"/>
+                </div>
+                <div class="col-sm-1">
+                    <p>:</p>
+                </div>
+                <div class="col-sm-4">
+                   <input type="number" id="minute" min="0" max="60" class="form-control" placeholder="min"/>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-primary bl_manual relayOn">Set</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- relay 3 switch -->
+            <h5 class="card-title">Tank capacity</h5>
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-6">
+                   <input type="number" id="cmd" min="0" max="70" class="form-control" placeholder="0-70"/>
+                </div>
+                <div class="col-sm-6">
+                  <button class="btn btn-primary bl_manual relayOn">Set</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+           <div class="card-body text-center">
+            <!-- relay 3 switch -->
+            <h5 class="card-title">Raw CMD</h5>
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-4">
+                   <input type="number" id="cmd" min="0" max="255" class="form-control" placeholder="Par"/>
+                </div>
+                <div class="col-sm-4">
+                   <input type="number" id="parameter" min="0" class="form-control" placeholder="Val"/>
+                </div>
+                <div class="col-sm-4">
+                  <button class="btn btn-primary bl_manual relayOn">Send</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- relay 3 switch -->
+            <h5 class="card-title">Set backlight level</h5>
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-6">
+                   <input type="number" id="bl_level" min="0" max="15" class="form-control" placeholder="0-15"/>
+                </div>
+                <div class="col-sm-6">
+                  <button class="btn btn-primary bl_manual relayOn">Set</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- status of connection -->
+            <button class="btn btn-reset bl_manual relayOn">Get data</button>
+            <button class="btn btn-reset bl_manual relayOn">Realtime</button>
+            <button class="btn btn-reset bl_manual relayOn">Start logging</button>
+            <button class="btn btn-reset bl_manual relayOn">Stop logging</button>
+            <button class="btn btn-reset bl_manual relayOn">Get log</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- status of connection -->
+            <button class="btn btn-reset bl_manual relayOn">Factory reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- status of connection -->
+            <h5 class="card-title">Status: <span id="status">...</span></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- info -->
+            <h5 class="card-title"><a href="https://phol-labs.ru" target="_blank">PHOL-LABS</a> | 2022</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
