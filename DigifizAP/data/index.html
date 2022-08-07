@@ -1,7 +1,3 @@
-<!-- 
-coder: Shanezzar (www.shanezzar.com)
-dated: 07-05-2020 
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,26 +26,28 @@ dated: 07-05-2020
       </div>
     </div>
     
+    
+    
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-4">
         <div class="card">
           <div class="card-body text-center">
-            <img src="digifiz.png" class="img-fluid" alt="Responsive image">
+            <img src="digifiz.png" height="320" alt="Responsive image">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- gauge for temperature -->
+            <canvas id="chartSpeed"  height="300" width="500"></canvas>
+            <h5 class="card-title">Speed: <span id="speed">0</span> MPH/KMH</h5>
           </div>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <!-- gauge for temperature -->
-            <canvas id="chartSpeed"></canvas>
-            <h5 class="card-title">Speed: <span id="speed">0</span> MPH/KMH</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <div class="card">
           <div class="card-body text-center">
             <!-- gauge for humidity -->
@@ -58,7 +56,18 @@ dated: 07-05-2020
           </div>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- gauge for heat index -->
+            <canvas id="chartFuel"></canvas>
+            <h5 class="card-title">Fuel: <span id="fuel">0</span>&#37;</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+       <div class="col-sm-4">
         <div class="card">
           <div class="card-body text-center">
             <!-- gauge for heat index -->
@@ -67,8 +76,6 @@ dated: 07-05-2020
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-sm-4">
         <div class="card">
           <div class="card-body text-center">
@@ -84,15 +91,6 @@ dated: 07-05-2020
             <!-- gauge for humidity -->
             <canvas id="chartAir"></canvas>
             <h5 class="card-title">Air Temp: <span id="airT">0</span>&#8451;</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <!-- gauge for heat index -->
-            <canvas id="chartFuel"></canvas>
-            <h5 class="card-title">Fuel: <span id="fuel">0</span>&#37;</h5>
           </div>
         </div>
       </div>
