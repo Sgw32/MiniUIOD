@@ -1,5 +1,55 @@
 $(document).ready(function () {
     
+    const PARAMETER_RPMCOEFFICIENT=0;
+    const PARAMETER_SPEEDCOEEFICIENT=1;
+    const PARAMETER_COOLANTTHERMISTORB=2;
+    const PARAMETER_OILTHERMISTORB=3;
+    const PARAMETER_AIRTHERMISTORB=4;
+    const PARAMETER_TANKMINRESISTANCE=5;
+    const PARAMETER_TANKMAXRESISTANCE=6;
+    const PARAMETER_TAU_COOLANT=7;
+    const PARAMETER_TAU_OIL=8;
+    const PARAMETER_TAU_AIR=9;
+    const PARAMETER_TAU_TANK=10;
+    const PARAMETER_MILEAGE=11;
+    const PARAMETER_DAILY_MILEAGE=12;
+    const PARAMETER_AUTO_BRIGHTNESS=13;
+    const PARAMETER_BRIGHTNESS_LEVEL=14;
+    const PARAMETER_TANK_CAPACITY=15;
+    const PARAMETER_MFA_STATE=16;
+    const PARAMETER_BUZZER_OFF=17;
+    const PARAMETER_MAX_RPM=18;
+    const PARAMETER_DOT_OFF=23;
+    const PARAMETER_BACKLIGHT_ON=24;
+    const PARAMETER_M_D_FILTER=25;
+    const PARAMETER_COOLANT_MAX_R=26;
+    const PARAMETER_COOLANT_MIN_R=27;
+    const PARAMETER_COMMAND_MFA_RESET=28;
+    const PARAMETER_COMMAND_MFA_MODE=29;
+    const PARAMETER_COMMAND_MFA_BLOCK=30;
+    const PARAMETER_READ_ADDITION=128;
+    const PARAMETER_SET_HOUR=255;
+    const PARAMETER_SET_MINUTE=254;
+    const PARAMETER_RESET_DAILY_MILEAGE=253;
+    const PARAMETER_RESET_DIGIFIZ=252;
+
+    //Data acquisition
+    const PARAMETER_GET_ACCUMULATED_UPTIME=251;
+    const PARAMETER_GET_COOLANT_TEMPERATURE=250;
+    const PARAMETER_GET_OIL_TEMPERATURE=249;
+    const PARAMETER_GET_AMBIENT_TEMPERATURE=248;
+    const PARAMETER_GET_FUEL_IN_TANK=247;
+    const PARAMETER_GET_SPEED=246;
+    const PARAMETER_GET_RPM=245;
+    const PARAMETER_SET_DAY=244;
+    const PARAMETER_SET_MONTH=243;
+    const PARAMETER_SET_YEAR=242;
+    const PARAMETER_GET_DAY=241;
+    const PARAMETER_GET_MONTH=240;
+    const PARAMETER_GET_YEAR=239;
+    const PARAMETER_GET_HOUR=238;
+    const PARAMETER_GET_MINUTE=237;
+
     // defining variables
     var targetSpeed = document.getElementById("chartSpeed");
     var targetRPM = document.getElementById("chartRPM");
@@ -10,11 +60,22 @@ $(document).ready(function () {
     
     var gaugeSpeed, gaugeRPM, gaugeTemp, gaugeOil, gaugeAir, gaugeFuel;
 
-    var relay1 = $('.relay1');
-    var relay2 = $('.relay2');
-    var relay3 = $('.relay3');
-    var relay4 = $('.relay4');
-
+    var mfablock = $('.mfablock');
+    var mfareset = $('.mfareset');
+    var mfamode = $('.mfamode');
+    var bckAutoBtn = $('.bckAutoBtn');
+    var bckManBtn = $('.bckManBtn');
+    var setTimeBtn = $('.setTimeBtn');
+    var setTCapBtn = $('.setTCapBtn');
+    var sendCmdBtn = $('.sendCmdBtn');
+    var setBckBtn = $('.setBckBtn');
+    var getDataBtn = $('.getDataBtn');
+    var realtimeBtn = $('.realtimeBtn');
+    var startLogBtn = $('.startLogBtn');
+    var stopLogBtn = $('.stopLogBtn');
+    var getLogBtn = $('.getLogBtn');
+    var factResetBtn = $('.factResetBtn');
+    
     initGauge();
 
     // webSockets
@@ -32,91 +93,145 @@ $(document).ready(function () {
     // webSocket data receive
     ws.onmessage = function (evt) {
         var data = evt.data;
-
-        // if id matches then toggle relays
-        if (data == "on-1") {
-            relayOn(relay1);
+        console.log(data);
+        if (data.includes(PARAMETER_GET_ACCUMULATED_UPTIME+": ")) {
+            var vData = data.replace(PARAMETER_GET_ACCUMULATED_UPTIME+": ", "");
+            console.log(vData);
         }
-        if (data == "off-1") {
-            relayOff(relay1);
-        }
-        if (data == "on-2") {
-            relayOn(relay2);
-        }
-        if (data == "off-2") {
-            relayOff(relay2);
-        }
-        if (data == "on-3") {
-            relayOn(relay3);
-        }
-        if (data == "off-3") {
-            relayOff(relay3);
-        }
-        if (data == "on-4") {
-            relayOn(relay4);
-        }
-        if (data == "off-4") {
-            relayOff(relay4);
-        }
-
-        if (data.includes("T: ")) {
-            var temperature = data.replace("T: ", "");
+        else if (data.includes(PARAMETER_GET_COOLANT_TEMPERATURE+": ")) {
+            var vData = data.replace(PARAMETER_GET_COOLANT_TEMPERATURE+": ", "");
+            console.log(vData);
             // setting gauge temperature value
-            gaugeTemp.set(temperature);
-            $('#temp').html(Math.round(temperature * 10) / 10);
+            gaugeTemp.set(Math.round(vData) / 120.0*80.0);
+            $('#coolantT').html(Math.round(vData));
         }
-        if (data.includes("H: ")) {
-            var humidity = data.replace("H: ", "");
-            // setting gauge humidity value
-            gaugeHumd.set(humidity);
-            $('#humd').html(Math.round(humidity));
+        else if (data.includes(PARAMETER_GET_OIL_TEMPERATURE+": ")) {
+            var vData = data.replace(PARAMETER_GET_OIL_TEMPERATURE+": ", "");
+            console.log(vData);
+            // setting gauge temperature value
+            gaugeOil.set(Math.round(vData) / 120.0*80.0);
+            $('#oilT').html(Math.round(vData));
         }
-        if (data.includes("I: ")) {
-            var heatIndex = data.replace("I: ", "");
-            // setting gauge heat index value
-            gaugeIndex.set(heatIndex);
-            $('#index').html(heatIndex);
+        else if (data.includes(PARAMETER_GET_AMBIENT_TEMPERATURE+": ")) {
+            var vData = data.replace(PARAMETER_GET_AMBIENT_TEMPERATURE+": ", "");
+            console.log(vData);
+            // setting gauge temperature value
+            gaugeAir.set((Math.round(vData) +50.0)/ 100.0*80.0);
+            $('#airT').html(Math.round(vData));
+        }
+        else if (data.includes(PARAMETER_GET_FUEL_IN_TANK+": ")) {
+            var vData = data.replace(PARAMETER_GET_FUEL_IN_TANK+": ", "");
+            console.log(vData);
+            // setting gauge temperature value
+            gaugeFuel.set(Math.round(vData)/60.0*80.0);
+            $('#fuel').html(Math.round(vData * 10) / 10);
+        }
+         else if (data.includes(PARAMETER_GET_SPEED+": ")) {
+            var vData = data.replace(PARAMETER_GET_SPEED+": ", "");
+            console.log(vData);
+            // setting gauge temperature value
+            gaugeSpeed.set(Math.round(vData) / 250.0*80.0);
+            $('#speed').html(Math.round(vData));
+        }
+        else if (data.includes(PARAMETER_GET_RPM+": ")) {
+            var vData = data.replace(PARAMETER_GET_RPM+": ", "");
+            console.log(vData);
+            // setting gauge temperature value
+            gaugeRPM.set(Math.round(vData)/8000.0*80.0);
+            $('#rpm').html(Math.round(vData));
+        }
+        else if (data.includes(PARAMETER_GET_DAY+": ")) {
+            var vData = data.replace(PARAMETER_GET_DAY);
+            console.log(vData);
+        }
+        else if (data.includes(PARAMETER_GET_MONTH+": ")) {
+            var vData = data.replace(PARAMETER_GET_MONTH);
+            console.log(vData);
+        }
+        else if (data.includes(PARAMETER_GET_DAY+": ")) {
+            var vData = data.replace(PARAMETER_GET_DAY);
+            console.log(vData);
+        }
+        else if (data.includes(PARAMETER_GET_YEAR+": ")) {
+            var vData = data.replace(PARAMETER_GET_YEAR);
+            console.log(vData);
+        }
+        else if (data.includes(PARAMETER_GET_HOUR+": ")) {
+            var vData = data.replace(PARAMETER_GET_HOUR);
+            console.log(vData);
+        }
+        else if (data.includes(PARAMETER_GET_MINUTE+": ")) {
+            var vData = data.replace(PARAMETER_GET_MINUTE);
+            console.log(vData);
         }
     };
 
     // sending commands to websockets
-    relay1.click(function() {
-        if (relay1.hasClass("relayOn")) {
-            ws.send("off-1");
-            relayOff(relay1);
-        } else {
-            ws.send("on-1");
-            relayOn(relay1);
-        }
-    });
-    relay2.click(function() {
-        if (relay2.hasClass("relayOn")) {
-            ws.send("off-2");
-            relayOff(relay2);
-        } else {
-            ws.send("on-2");
-            relayOn(relay2);
-        }
-    });
-    relay3.click(function() {
-        if (relay3.hasClass("relayOn")) {
-            ws.send("off-3");
-            relayOff(relay3);
-        } else {
-            ws.send("on-3");
-            relayOn(relay3);
-        }
-    });
-    relay4.click(function() {
-        if (relay4.hasClass("relayOn")) {
-            ws.send("off-4");
-            relayOff(relay4);
-        } else {
-            ws.send("on-4");
-            relayOn(relay4);
-        }
+    
+    mfablock.click(function() {
+        ws.send("mfablock");
     });
 
+    mfareset.click(function() {
+        ws.send("mfareset");
+    });
+    
+    mfamode.click(function() {
+        ws.send("mfamode");
+    });
+    
+    bckAutoBtn.click(function() {
+        ws.send("bckAutoBtn");
+    });
+    
+    bckManBtn.click(function() {
+        ws.send("bckManBtn");
+    });
+    
+    setTimeBtn.click(function() {
+        var hourStr = $("#hour").val();
+        var minute = $("#minute").val();
+        ws.send("255 "+hourStr);
+        ws.send("254 "+minute);
+    });
+    
+    sendCmdBtn.click(function() {
+        var cmd = $("#cmd").val();
+        var parameter = $("#parameter").val();
+        ws.send(cmd+" "+parameter);
+        //ws.send("sendCmdBtn");
+    });
+    
+    setBckBtn.click(function() {
+        ws.send("setBckBtn");
+    });
+    
+    getDataBtn.click(function() {
+        ws.send("getDataBtn");
+    });
+    
+    sendCmdBtn.click(function() {
+        ws.send("sendCmdBtn");
+    });
+    
+    realtimeBtn.click(function() {
+        ws.send("realtimeBtn");
+    });
+    
+    startLogBtn.click(function() {
+        ws.send("startLogBtn");
+    });
+    
+    stopLogBtn.click(function() {
+        ws.send("stopLogBtn");
+    });
+    setTCapBtn.click(function() {
+        ws.send("setTCapBtn");
+    });
+    
+    factResetBtn.click(function() {
+        ws.send("252 0");
+    });
     // toggling relay classes
     function relayOn(relay) {
         relay.removeClass("relayOff");

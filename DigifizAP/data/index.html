@@ -14,8 +14,39 @@
 </head>
 <body>
 
-<div class="container">
-  <div class="center-all">
+
+<ul class="nav nav-tabs">
+  <li class="active">
+    <button class="nav-link active" id="home-tab" data-toggle="tab" href="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+  </li>
+  <li>
+  <button class="nav-link" id="home-tab" data-toggle="tab" href="#menu1" type="button" role="tab" aria-controls="home" aria-selected="true">M1</button>
+  </li>
+  <li>
+  <button class="nav-link" id="home-tab" data-toggle="tab" href="#menu2" type="button" role="tab" aria-controls="home" aria-selected="true">M2</button>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div id="home" class="tab-pane in active">
+    <h3>Dashboard</h3>
+    <p>Dashboard data</p>
+  </div>
+  <div id="menu1" class="tab-pane fade">
+    <h3>Setup</h3>
+    <p>Parameter setup</p>
+  </div>
+  <div id="menu2" class="tab-pane fade">
+    <h3>Logs</h3>
+    <p>Logs and information</p>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div>
+    <div class="row">
+        
+    </div>
     <div class="row">
       <div class="col-sm-12">
         <div class="card">
@@ -112,8 +143,8 @@
           <div class="card-body text-center">
             <!-- relay 2 switch -->
             <h5 class="card-title">Backlight</h5>
-            <button class="btn btn-primary bl_auto relayOn">Auto</button>
-            <button class="btn btn-primary bl_manual relayOn">Manual</button>
+            <button class="btn btn-primary bl_auto bckAutoBtn relayOn">Auto</button>
+            <button class="btn btn-primary bl_manual bckManBtn relayOn">Manual</button>
           </div>
         </div>
       </div>
@@ -134,7 +165,7 @@
                    <input type="number" id="minute" min="0" max="60" class="form-control" placeholder="min"/>
                 </div>
                 <div class="col-sm-2">
-                  <button class="btn btn-primary bl_manual relayOn">Set</button>
+                  <button class="btn btn-primary bl_manual setTimeBtn relayOn">Set</button>
                 </div>
               </div>
             </div>
@@ -152,10 +183,10 @@
             <div class="container">
               <div class="row">
                 <div class="col-sm-6">
-                   <input type="number" id="cmd" min="0" max="70" class="form-control" placeholder="0-70"/>
+                   <input type="number" id="tcap" min="0" max="70" class="form-control" placeholder="0-70"/>
                 </div>
                 <div class="col-sm-6">
-                  <button class="btn btn-primary bl_manual relayOn">Set</button>
+                  <button class="btn btn-primary bl_manual setTCapBtn relayOn">Set</button>
                 </div>
               </div>
             </div>
@@ -176,7 +207,7 @@
                    <input type="number" id="parameter" min="0" class="form-control" placeholder="Val"/>
                 </div>
                 <div class="col-sm-4">
-                  <button class="btn btn-primary bl_manual relayOn">Send</button>
+                  <button class="btn btn-primary bl_manual sendCmdBtn relayOn">Send</button>
                 </div>
               </div>
             </div>
@@ -194,7 +225,7 @@
                    <input type="number" id="bl_level" min="0" max="15" class="form-control" placeholder="0-15"/>
                 </div>
                 <div class="col-sm-6">
-                  <button class="btn btn-primary bl_manual relayOn">Set</button>
+                  <button class="btn btn-primary bl_manual setBckBtn relayOn">Set</button>
                 </div>
               </div>
             </div>
@@ -207,11 +238,11 @@
         <div class="card">
           <div class="card-body text-center">
             <!-- status of connection -->
-            <button class="btn btn-reset bl_manual relayOn">Get data</button>
-            <button class="btn btn-reset bl_manual relayOn">Realtime</button>
-            <button class="btn btn-reset bl_manual relayOn">Start logging</button>
-            <button class="btn btn-reset bl_manual relayOn">Stop logging</button>
-            <button class="btn btn-reset bl_manual relayOn">Get log</button>
+            <button class="btn btn-reset bl_manual getDataBtn relayOn">Get data</button>
+            <button class="btn btn-reset bl_manual realtimeBtn relayOn">Realtime</button>
+            <button class="btn btn-reset bl_manual startLogBtn relayOn">Start logging</button>
+            <button class="btn btn-reset bl_manual stopLogBtn relayOn">Stop logging</button>
+            <button class="btn btn-reset bl_manual getLogBtn relayOn">Get log</button>
           </div>
         </div>
       </div>
@@ -221,7 +252,7 @@
         <div class="card">
           <div class="card-body text-center">
             <!-- status of connection -->
-            <button class="btn btn-reset bl_manual relayOn">Factory reset</button>
+            <button class="btn btn-reset bl_manual factResetBtn relayOn">Factory reset</button>
           </div>
         </div>
       </div>
