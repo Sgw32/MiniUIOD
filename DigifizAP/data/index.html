@@ -156,13 +156,13 @@
             <div class="container">
               <div class="row">
                 <div class="col-sm-4">
-                   <input type="number" id="hour" min="0" max="24" class="form-control" placeholder="hour"/>
+                   <input type="number" id="hour" min="0" max="24" class="form-control hour" placeholder="hour"/>
                 </div>
                 <div class="col-sm-1">
                     <p>:</p>
                 </div>
                 <div class="col-sm-4">
-                   <input type="number" id="minute" min="0" max="60" class="form-control" placeholder="min"/>
+                   <input type="number" id="minute" min="0" max="60" class="form-control minute" placeholder="min"/>
                 </div>
                 <div class="col-sm-2">
                   <button class="btn btn-primary bl_manual setTimeBtn relayOn">Set</button>
@@ -239,7 +239,7 @@
           <div class="card-body text-center">
             <!-- status of connection -->
             <button class="btn btn-reset bl_manual getDataBtn relayOn">Get data</button>
-            <button class="btn btn-reset bl_manual realtimeBtn relayOn">Realtime</button>
+            <button class="btn btn-reset bl_manual realtimeBtn relayOn" id="realtimeBtn" >Realtime</button>
             <button class="btn btn-reset bl_manual startLogBtn relayOn">Start logging</button>
             <button class="btn btn-reset bl_manual stopLogBtn relayOn">Stop logging</button>
             <button class="btn btn-reset bl_manual getLogBtn relayOn">Get log</button>

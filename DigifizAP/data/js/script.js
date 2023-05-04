@@ -76,6 +76,9 @@ $(document).ready(function () {
     var getLogBtn = $('.getLogBtn');
     var factResetBtn = $('.factResetBtn');
     
+    var realtimeQueryActive = 0;
+    var curParam = 237;
+    
     initGauge();
 
     // webSockets
@@ -141,32 +144,49 @@ $(document).ready(function () {
             $('#rpm').html(Math.round(vData));
         }
         else if (data.includes(PARAMETER_GET_DAY+": ")) {
-            var vData = data.replace(PARAMETER_GET_DAY);
+            var vData = data.replace(PARAMETER_GET_DAY+": ", "");
             console.log(vData);
         }
         else if (data.includes(PARAMETER_GET_MONTH+": ")) {
-            var vData = data.replace(PARAMETER_GET_MONTH);
+            var vData = data.replace(PARAMETER_GET_MONTH+": ", "");
             console.log(vData);
         }
         else if (data.includes(PARAMETER_GET_DAY+": ")) {
-            var vData = data.replace(PARAMETER_GET_DAY);
+            var vData = data.replace(PARAMETER_GET_DAY+": ", "");
             console.log(vData);
         }
         else if (data.includes(PARAMETER_GET_YEAR+": ")) {
-            var vData = data.replace(PARAMETER_GET_YEAR);
+            var vData = data.replace(PARAMETER_GET_YEAR+": ", "");
             console.log(vData);
         }
         else if (data.includes(PARAMETER_GET_HOUR+": ")) {
-            var vData = data.replace(PARAMETER_GET_HOUR);
+            var vData = data.replace(PARAMETER_GET_HOUR+": ", "");
+            document.getElementById("hour").value = vData;
             console.log(vData);
         }
         else if (data.includes(PARAMETER_GET_MINUTE+": ")) {
-            var vData = data.replace(PARAMETER_GET_MINUTE);
+            var vData = data.replace(PARAMETER_GET_MINUTE+": ", "");
+            document.getElementById("minute").value = vData;
             console.log(vData);
         }
     };
 
     // sending commands to websockets
+    
+    var intervalID = setInterval(
+        function()
+        {
+            console.log("realtime update");
+            if (realtimeQueryActive)
+            {
+                //237..251
+                //getDataBtn.click();
+                ws.send(curParam+" 0");
+                curParam+=1;
+                if (curParam==252)
+                    curParam=237;
+            }
+        }, 500);
     
     mfablock.click(function() {
         ws.send("mfablock");
@@ -203,7 +223,8 @@ $(document).ready(function () {
     });
     
     setBckBtn.click(function() {
-        ws.send("setBckBtn");
+        var bl_level = $("#bl_level").val();
+        ws.send("14 "+bl_level);
     });
     
     getDataBtn.click(function() {
@@ -215,7 +236,17 @@ $(document).ready(function () {
     });
     
     realtimeBtn.click(function() {
-        ws.send("realtimeBtn");
+        //ws.send("realtimeBtn");
+        if (realtimeQueryActive==0)
+        {
+            document.getElementById("realtimeBtn").innerHTML = "Query active";
+            realtimeQueryActive = 1;
+        }
+        else
+        {
+            document.getElementById("realtimeBtn").innerHTML = "Realtime";
+            realtimeQueryActive = 0;
+        }
     });
     
     startLogBtn.click(function() {
@@ -226,7 +257,8 @@ $(document).ready(function () {
         ws.send("stopLogBtn");
     });
     setTCapBtn.click(function() {
-        ws.send("setTCapBtn");
+        var tcap = $("#tcap").val();
+        ws.send("15 "+tcap);
     });
     
     factResetBtn.click(function() {

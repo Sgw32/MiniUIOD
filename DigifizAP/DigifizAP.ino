@@ -17,6 +17,8 @@ int relay_pin2 = 33;
 int relay_pin3 = 25;
 int relay_pin4 = 26;
 
+int getAllDataFlag = 0;
+
 // defining server
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
@@ -168,23 +170,29 @@ void processData(String data) {
       Serial.print("13 0\n");
     }
     else if (data.startsWith("setTimeBtn")) {
-      
+      String hour = data.substring(10,2);
+      String minute = data.substring(12,2);
+      Serial.print("255 "+hour+"\n");
+      Serial.flush();
+      Serial.print("254 "+minute+"\n");
     }
     else if (data.startsWith("setTCapBtn")) {
-      
+      String tcap = data.substring(10,2);
+      Serial.print("15 "+tcap+"\n");
     }
     else if (data.startsWith("sendCmdBtn")) {
       
     }
     else if (data.startsWith("setBckBtn")) {
-      
+      String bck = data.substring(9,2);
+      Serial.print("14 "+bck+"\n");
     }
     else if (data.startsWith("getDataBtn")) {
-      Serial.print(String(PARAMETER_GET_FUEL_IN_TANK)+" 0\n");
-      parameter_pending = PARAMETER_GET_FUEL_IN_TANK;
-    }
-    else if (data.startsWith("realtimeBtn")) {
-      
+      //Serial.print(String(PARAMETER_GET_FUEL_IN_TANK)+" 0\n");
+      //parameter_pending = PARAMETER_GET_FUEL_IN_TANK;
+      parameter_pending = PARAMETER_GET_MINUTE;
+      Serial.print(String(parameter_pending)+" 0\n");
+      getAllDataFlag = 1;
     }
     else if (data == "startLogBtn") {
       
@@ -197,6 +205,11 @@ void processData(String data) {
     }
     else 
     {
+      String par = data.substring(0,data.indexOf(' '));
+      parameter_pending = par.toInt();
+      #ifdef DEBUG_SERIAL
+        Serial.println("par pending:"+par);
+      #endif
       Serial.print(data+"\n"); //send cmd directly
     }
     
@@ -359,6 +372,17 @@ void digifizRead() {
     }
     //Wait until send
     Serial.flush();
+    /*if (getAllDataFlag)
+    {
+      parameter_pending += 1;
+      Serial.print(String(parameter_pending)+" 0\n");
+      if (parameter_pending==PARAMETER_GET_ACCUMULATED_UPTIME);
+      {
+        getAllDataFlag = 0;
+      }
+    }
+    //Wait until send
+    Serial.flush();*/
   }
 }
 
