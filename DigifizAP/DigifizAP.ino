@@ -1,5 +1,5 @@
-#include "network.h"
 #include "commands.h"
+#include "network.h"
 
 // Board pins
 constexpr uint8_t RELAY_PIN1 = 32;
@@ -23,4 +23,5 @@ void setup() {
 
 void loop() {
   digifizRead();
+  otaLoop();
 }

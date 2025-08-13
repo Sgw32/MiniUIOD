@@ -11,3 +11,4 @@ void setupSPIFFS();
 void setupWifiHost();
 void setupHTTPRoutes();
 void startWebServer();
+void otaLoop();

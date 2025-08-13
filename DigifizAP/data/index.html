@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Digifiz Control Panel</title>
+  <title>Audi Digifiz Control Panel</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -14,15 +14,36 @@
 </head>
 <body>
 
-<ul class="nav nav-tabs" role="tablist">
-  <li class="active"><a class="nav-link active" data-toggle="tab" href="#dashboard" role="tab">Dashboard</a></li>
-  <li><a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a></li>
-  <li><a class="nav-link" data-toggle="tab" href="#logs" role="tab">Logs</a></li>
-  <li><a class="nav-link" data-toggle="tab" href="#firmware" role="tab">Firmware</a></li>
+<ul class="nav nav-tabs" id="mainTabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="dashboard-tab" data-toggle="tab"
+       href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true">
+      Dashboard
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="settings-tab" data-toggle="tab"
+       href="#settings" role="tab" aria-controls="settings" aria-selected="false">
+      Settings
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="logs-tab" data-toggle="tab"
+       href="#logs" role="tab" aria-controls="logs" aria-selected="false">
+      Logs
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="firmware-tab" data-toggle="tab"
+       href="#firmware" role="tab" aria-controls="firmware" aria-selected="false">
+      Firmware
+    </a>
+  </li>
 </ul>
 
 <div class="tab-content">
-  <div id="dashboard" class="tab-pane fade in active">
+  <div id="dashboard" class="tab-pane fade show active"
+       role="tabpanel" aria-labelledby="dashboard-tab">
     <div class="container-fluid">
       <div>
         <div class="row">
@@ -41,18 +62,18 @@
 
 
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-12">
             <div class="card">
               <div class="card-body text-center">
-                <img src="digifiz.png" height="320" alt="Responsive image">
+                <img src="digifiz.png" class="img-fluid" >
               </div>
             </div>
           </div>
-          <div class="col-sm-8">
+          <div class="col-sm-12">
             <div class="card">
               <div class="card-body text-center">
                 <!-- gauge for temperature -->
-                <canvas id="chartSpeed"  height="300" width="500"></canvas>
+                <canvas id="chartSpeed" ></canvas>
                 <h5 class="card-title">Speed: <span id="speed">0</span> MPH/KMH</h5>
               </div>
             </div>
@@ -251,15 +272,18 @@
       </div>
     </div>
   </div>
-  <div id="settings" class="tab-pane fade">
+  <div id="settings" class="tab-pane fade"
+       role="tabpanel" aria-labelledby="settings-tab">
     <h3>Settings</h3>
     <p>Coming soon</p>
   </div>
-  <div id="logs" class="tab-pane fade">
+  <div id="logs" class="tab-pane fade"
+       role="tabpanel" aria-labelledby="logs-tab">
     <h3>Logs</h3>
     <div id="wsLog" class="log-window"></div>
   </div>
-  <div id="firmware" class="tab-pane fade">
+  <div id="firmware" class="tab-pane fade"
+       role="tabpanel" aria-labelledby="firmware-tab">
     <h3>Firmware Update</h3>
     <p>Coming soon</p>
     <button class="btn btn-primary" disabled>OTA Update</button>
