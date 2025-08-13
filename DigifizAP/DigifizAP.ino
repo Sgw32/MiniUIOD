@@ -16,6 +16,8 @@ int relay_pin1 = 32;
 int relay_pin2 = 33;
 int relay_pin3 = 25;
 int relay_pin4 = 26;
+int spd_in = 33;
+int oil18 = 35;
 
 int getAllDataFlag = 0;
 
@@ -48,7 +50,9 @@ void setup() {
   Serial.setDebugOutput(false);
 #endif
   Serial.begin (9600);
-  
+  pinMode (spd_in, INPUT);
+  pinMode (oil18, INPUT);
+  pinMode (oil18, INPUT);
 }
 
 void loop() {
@@ -58,10 +62,10 @@ void loop() {
 
 void setupRelaySensor() {
   // initialize relay pins
-  pinMode (relay_pin1, OUTPUT);
-  pinMode (relay_pin2, OUTPUT);
-  pinMode (relay_pin3, OUTPUT);
-  pinMode (relay_pin4, OUTPUT);
+  //pinMode (relay_pin1, OUTPUT);
+  //pinMode (relay_pin2, OUTPUT);
+  //pinMode (relay_pin3, OUTPUT);
+  //pinMode (relay_pin4, OUTPUT);
 }
 
 void setupSPIFFS() {
@@ -365,6 +369,12 @@ void digifizRead() {
           Serial.println("ans PARAMETER_GET_MINUTE");  
           #endif
           ws.textAll(String(PARAMETER_GET_MINUTE)+": "+cmd);
+          break;
+        case PARAMETER_GET_GPIO_PINS:
+          #ifdef DEBUG_SERIAL
+          Serial.println("ans PARAMETER_GET_GPIO_PINS");  
+          #endif
+          ws.textAll(String(PARAMETER_GET_GPIO_PINS)+": "+cmd);
           break;
         default:
           break;
