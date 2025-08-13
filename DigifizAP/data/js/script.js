@@ -75,10 +75,19 @@ $(document).ready(function () {
     var stopLogBtn = $('.stopLogBtn');
     var getLogBtn = $('.getLogBtn');
     var factResetBtn = $('.factResetBtn');
-    
+
     var realtimeQueryActive = 0;
     var curParam = 237;
-    
+    var logArea = $('#wsLog');
+
+    function logEvent(message) {
+        var time = new Date().toLocaleTimeString();
+        if (logArea.length) {
+            logArea.append('<div>[' + time + '] ' + message + '</div>');
+            logArea.scrollTop(logArea[0].scrollHeight);
+        }
+    }
+
     initGauge();
 
     // webSockets
@@ -87,16 +96,19 @@ $(document).ready(function () {
     ws.onopen = function () {
         $('#status').html("Connected");
         $('#status').css('color', '#6AA84F');
+        logEvent('Connected');
     };
     // webSocket connection close
     ws.onclose = function () {
         $('#status').html("Disconnected");
         $('#status').css('color', '#CC0200');
+        logEvent('Disconnected');
     };
     // webSocket data receive
     ws.onmessage = function (evt) {
         var data = evt.data;
         console.log(data);
+        logEvent('Received: ' + data);
         if (data.includes(PARAMETER_GET_ACCUMULATED_UPTIME+": ")) {
             var vData = data.replace(PARAMETER_GET_ACCUMULATED_UPTIME+": ", "");
             console.log(vData);
