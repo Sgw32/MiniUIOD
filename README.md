@@ -1,12 +1,11 @@
-# ESP32 Relay DHT
+# Digifiz Replica MiniUIOD expansion module based on ESP32 Relay DHT
 
-<img alt="intro" src="https://user-images.githubusercontent.com/35195398/82018588-e3823700-9685-11ea-8242-12c46c9e09ef.png">
+For Digifiz Replica Golf 2 / Jetta 2 dashboard. 
 
-The above figure shows how the project looks at the delivered state. In this project, we are going to control a 4 Channel Relay module and read the temperature and humidity values of the surrounding environment with a DHT11 sensor using the ESP32 development board.
+More info here: https://github.com/Sgw32/DigifizReplica
 
-The ESP32 development board connects to the local Wi-Fi network and a DNS ([http://shanezzar.local](http://shanezzar.local)/) is initiated. Hitting this URL connects that client to the ESP32 development board by means of web sockets resulting in synchronized data exchange across all devices. The ESP32 development board also uses SPI Flash File System and a web page is burned in the board which displays temperature, humidity, and heat index gauges along with 4 buttons to toggle the relay modules ON/OFF. All the debug data is shown on the serial monitor at 115200.
+Initial code author: [Shanezzar.](https://shanezzar.com/)
 
-Please see the the documentation.pdf in the repo for more information.
-
-Regards,  
-[Shanezzar.](https://shanezzar.com/)
+UIOD = Universal Input and Ouput Device
+Allows remote access to Digifiz Replica from Wi-Fi web page with settings. 
+More info coming soon. 
