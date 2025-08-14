@@ -1,7 +1,7 @@
 #include "network.h"
 #include "commands.h"
 #include <ESPmDNS.h>
-#include <ElegantOTA.h>
+#include <AsyncElegantOTA.h>
 #include <SPIFFS.h>
 #include <WiFi.h>
 #include <WiFiAP.h>
@@ -97,11 +97,11 @@ void startWebServer() {
   ws.onEvent(onWsEvent);
   server.addHandler(&ws);
   setupHTTPRoutes();
-  ElegantOTA.begin(&server);
-  ElegantOTA.onStart(onOTAStart);
-  ElegantOTA.onProgress(onOTAProgress);
-  ElegantOTA.onEnd(onOTAEnd);
+  AsyncElegantOTA.begin(&server);
+  AsyncElegantOTA.onStart(onOTAStart);
+  AsyncElegantOTA.onProgress(onOTAProgress);
+  AsyncElegantOTA.onEnd(onOTAEnd);
   server.begin();
 }
 
-void otaLoop() { ElegantOTA.loop(); }
+void otaLoop() { AsyncElegantOTA.loop(); }
