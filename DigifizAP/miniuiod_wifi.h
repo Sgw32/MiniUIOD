@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef ELEGANTOTA_USE_ASYNC_WEBSERVER
+#define ELEGANTOTA_USE_ASYNC_WEBSERVER
+#endif
+
 #include <ESPAsyncWebServer.h>
 
 extern AsyncWebServer server;

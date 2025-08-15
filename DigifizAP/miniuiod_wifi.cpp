@@ -1,4 +1,4 @@
-#include "network.h"
+#include "miniuiod_wifi.h"
 #include "commands.h"
 #include <ESPmDNS.h>
 #include <ElegantOTA.h>

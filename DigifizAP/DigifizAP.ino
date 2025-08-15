@@ -1,5 +1,5 @@
 #include "commands.h"
-#include "network.h"
+#include "miniuiod_wifi.h"
 
 // Board pins
 constexpr uint8_t RELAY_PIN1 = 32;
