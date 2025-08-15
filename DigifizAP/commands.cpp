@@ -1,5 +1,5 @@
 #include "commands.h"
-#include "network.h"
+#include "miniuiod_wifi.h"
 #include "protocol.h"
 
 int getAllDataFlag = 0;
