@@ -1,0 +1,41 @@
+name: Build ESP32 firmware
+
+on:
+  push:
+    paths:
+      - 'DigifizAP/**'
+      - '.github/workflows/esp32-build.yml'
+  pull_request:
+    paths:
+      - 'DigifizAP/**'
+      - '.github/workflows/esp32-build.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Arduino CLI
+        uses: arduino/setup-arduino-cli@v1
+
+      - name: Install ESP32 platform
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install esp32:esp32
+
+      - name: Install libraries
+        run: |
+          arduino-cli lib install ESPAsyncWebServer AsyncTCP ElegantOTA
+
+      - name: Compile DigifizAP sketch
+        run: |
+          arduino-cli compile --fqbn esp32:esp32:esp32 DigifizAP --output-dir build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: DigifizAP-esp32
+          path: build
+
