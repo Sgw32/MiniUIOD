@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef ELEGANTOTA_USE_ASYNC_WEBSERVER
-#define ELEGANTOTA_USE_ASYNC_WEBSERVER
+#define ELEGANTOTA_USE_ASYNC_WEBSERVER 1
 #endif
 
 #include <ESPAsyncWebServer.h>
