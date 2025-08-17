@@ -23,7 +23,8 @@ jobs:
       - name: Install ESP32 platform
         run: |
           arduino-cli core update-index
-          arduino-cli core install esp32:esp32
+          # Use ESP32 core version 2.0.9 to ensure compatibility with libraries
+          arduino-cli core install esp32:esp32@2.0.9
 
       - name: Install libraries
         run: |
