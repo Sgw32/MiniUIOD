@@ -284,10 +284,12 @@
   </div>
   <div id="firmware" class="tab-pane fade"
        role="tabpanel" aria-labelledby="firmware-tab">
-    <h3>Firmware Update</h3>
-    <p>Coming soon</p>
-    <button class="btn btn-primary" disabled>OTA Update</button>
-    <button class="btn btn-primary" disabled>SPIFFS Update</button>
+    <iframe id="updateFrame" src=""
+            style="width:100%;min-height:600px;border:0;"></iframe>
+    <script>
+      document.getElementById('updateFrame').src =
+        'http://' + window.location.hostname + '/update';
+    </script>
   </div>
 </div>
 
