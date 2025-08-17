@@ -75,6 +75,8 @@ $(document).ready(function () {
     var stopLogBtn = $('.stopLogBtn');
     var getLogBtn = $('.getLogBtn');
     var factResetBtn = $('.factResetBtn');
+    var lockBtn = $('.lockBtn');
+    var unlockBtn = $('.unlockBtn');
 
     var realtimeQueryActive = 0;
     var curParam = 237;
@@ -272,9 +274,20 @@ $(document).ready(function () {
         var tcap = $("#tcap").val();
         ws.send("15 "+tcap);
     });
-    
+
     factResetBtn.click(function() {
         ws.send("252 0");
+    });
+    lockBtn.click(function() {
+        ws.send("235 123");
+        lockBtn.prop('disabled', true);
+        unlockBtn.prop('disabled', false);
+    });
+
+    unlockBtn.click(function() {
+        ws.send("234 123");
+        unlockBtn.prop('disabled', true);
+        lockBtn.prop('disabled', false);
     });
     // toggling relay classes
     function relayOn(relay) {
